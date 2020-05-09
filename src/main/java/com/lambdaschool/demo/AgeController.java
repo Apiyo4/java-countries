@@ -17,7 +17,13 @@ public class AgeController {
     public ResponseEntity<?> getCountryWithMedianAgeAsAge(@PathVariable int age){
         ArrayList<Country> rtnCountry  = DemoApplication.ourCountryList.findCountries(c->c.getMedianAge() >= age);
         return new ResponseEntity<>(rtnCountry, HttpStatus.OK);
-
+    }
+//     localhost:2020/age/min - return the country with the smallest median age
+    @GetMapping(value="/min", produces = "application/json")
+    public ResponseEntity<?> getCountryWithSmallestMedian(){
+        DemoApplication.ourCountryList.countryList.sort((c1,c2)->c1.getMedianAge() - c2.getMedianAge());
+        Country smallestMedianCountry = DemoApplication.ourCountryList.countryList.get(0);
+        return new ResponseEntity<>(smallestMedianCountry, HttpStatus.OK);
     }
 
 }
