@@ -25,5 +25,13 @@ public class AgeController {
         Country smallestMedianCountry = DemoApplication.ourCountryList.countryList.get(0);
         return new ResponseEntity<>(smallestMedianCountry, HttpStatus.OK);
     }
+//    localhost:2020/age/max - return the country the the greatest median age
+    @GetMapping(value = "/max", produces = "application/json")
+    public ResponseEntity<?> getCountryWithLargestMedian(){
+        DemoApplication.ourCountryList.countryList.sort((c1,c2)->c2.getMedianAge()-c1.getMedianAge());
+        Country largestMedianCountry =  DemoApplication.ourCountryList.countryList.get(0);
+        return new ResponseEntity<>(largestMedianCountry, HttpStatus.OK);
+    }
+
 
 }
