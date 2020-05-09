@@ -12,22 +12,29 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/population")
 public class PopulationController {
-//    localhost:2020/population/size/{people} - return the countries that have a population equal to or greater than
+    //    localhost:2020/population/size/{people} - return the countries that have a population equal to or greater than
 //    return the countries that have a population equal to or greater than the given population
 //    the
 //    given population
-    @GetMapping(value="/size/{people}", produces = "application/json")
-    public ResponseEntity<?> getCountriesWithPopulationGreaterThanOrEqualTo(@PathVariable int people){
-        ArrayList<Country> rtnCountry = DemoApplication.ourCountryList.findCountries(c->c.getPopulation()>= people);
+    @GetMapping(value = "/size/{people}", produces = "application/json")
+    public ResponseEntity<?> getCountriesWithPopulationGreaterThanOrEqualTo(@PathVariable int people) {
+        ArrayList<Country> rtnCountry = DemoApplication.ourCountryList.findCountries(c -> c.getPopulation() >= people);
         return new ResponseEntity<>(rtnCountry, HttpStatus.OK);
     }
-//     localhost:2020/population/min - return the country with the smallest population
-    @GetMapping(value="/min", produces = "application/json")
-    public ResponseEntity<?> getCountryWithLowestPopulation(){
-        DemoApplication.ourCountryList.countryList.sort((c1,c2)->c1.getPopulation() - c2.getPopulation());
-        Country newCountry = DemoApplication.ourCountryList.countryList.get(0);
-        return new ResponseEntity<>(newCountry, HttpStatus.OK);
+
+    //     localhost:2020/population/min - return the country with the smallest population
+    @GetMapping(value = "/min", produces = "application/json")
+    public ResponseEntity<?> getCountryWithLowestPopulation() {
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c1.getPopulation() - c2.getPopulation());
+        Country leastPopulatedCountry = DemoApplication.ourCountryList.countryList.get(0);
+        return new ResponseEntity<>(leastPopulatedCountry, HttpStatus.OK);
 
     }
+    //      localhost:2020/population/max - return the country with the largest population
+    @GetMapping(value = "/max", produces = "application/json")
+    public ResponseEntity<?> getCountryWithHighestPopulation() {
+        DemoApplication.ourCountryList.countryList.sort((c1, c2) -> c2.getPopulation() - c1.getPopulation());
+        Country mostPopulatedCountry = DemoApplication.ourCountryList.countryList.get(0);
+        return new ResponseEntity<>(mostPopulatedCountry, HttpStatus.OK);
+    }
 }
-
