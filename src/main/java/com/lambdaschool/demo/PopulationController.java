@@ -13,6 +13,7 @@ import java.util.ArrayList;
 @RequestMapping("/population")
 public class PopulationController {
 //    localhost:2020/population/size/{people} - return the countries that have a population equal to or greater than
+//    return the countries that have a population equal to or greater than the given population
 //    the
 //    given population
     @GetMapping(value="/size/{people}", produces = "application/json")
@@ -20,6 +21,13 @@ public class PopulationController {
         ArrayList<Country> rtnCountry = DemoApplication.ourCountryList.findCountries(c->c.getPopulation()>= people);
         return new ResponseEntity<>(rtnCountry, HttpStatus.OK);
     }
+//     localhost:2020/population/min - return the country with the smallest population
+    @GetMapping(value="/min", produces = "application/json")
+    public ResponseEntity<?> getCountryWithLowestPopulation(){
+        DemoApplication.ourCountryList.countryList.sort((c1,c2)->c1.getPopulation() - c2.getPopulation());
+        Country newCountry = DemoApplication.ourCountryList.countryList.get(0);
+        return new ResponseEntity<>(newCountry, HttpStatus.OK);
 
+    }
 }
 
