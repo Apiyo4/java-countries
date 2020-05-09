@@ -37,4 +37,5 @@ public class PopulationController {
         Country mostPopulatedCountry = DemoApplication.ourCountryList.countryList.get(0);
         return new ResponseEntity<>(mostPopulatedCountry, HttpStatus.OK);
     }
+
 }
